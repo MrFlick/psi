@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
+    "lint": "eslint server/*.js",
     "build": "webpack --mode development",
     "watchrun": "concurrently \"webpack --mode development --watch\" \"node server/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,8 +24,11 @@
     "@babel/core": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.2",
     "concurrently": "^4.0.1",
+    "eslint": "^5.7.0",
+    "eslint-loader": "^2.1.1",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   }
