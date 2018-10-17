@@ -10,7 +10,7 @@ VALUES (1, "Del Close"),
 (7, "Jane Ritchie"),
 (8, "Zachary Burcham");
 
-INSERT INTO curriculum(course_id, course_name, prev_course_id)
+INSERT INTO courses(course_id, course_name, prev_course_id)
 VALUES ("IMPROV-1", "Improv 1: Intro to Improv", NULL),
 ("IMPROV-2", "Improv 2: Improv Skills", "IMPROV-1"),
 ("IMED-1", "Intermediate 1: Scene Work", "IMPROV-2"),

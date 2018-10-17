@@ -6,7 +6,7 @@ CREATE TABLE people (
 	email TEXT
 );
 
-CREATE TABLE curriculum (
+CREATE TABLE courses (
 	course_id TEXT PRIMARY KEY,
 	course_name TEXT,
 	course_desc TEXT,

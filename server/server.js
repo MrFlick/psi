@@ -4,7 +4,7 @@ const port = 3000
 var Sequelize = require("sequelize")
 
 var sequelize = new Sequelize("sqlite:db/data.sqlite3", {
-    operatorsAliases: false
+    operatorsAliases: true
 });
 
 const api = require("./routes/api")(sequelize)
