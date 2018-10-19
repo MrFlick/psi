@@ -1,7 +1,7 @@
 import React, { Component} from "react";
 import TermList from "./TermList"
 
-class App extends Component{
+class HomeView extends Component{
   constructor(props) {
     super(props)
     this.state = {terms: []}
@@ -22,4 +22,4 @@ class App extends Component{
   }
 }
 
-export default App;
+export default HomeView;
