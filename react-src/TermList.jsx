@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class TermList extends Component {
   render() {
@@ -14,4 +15,10 @@ class TermList extends Component {
     );
   }
 }
+
+TermList.propTypes = {
+  terms: PropTypes.array
+}
+
+
 export default TermList;

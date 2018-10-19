@@ -4,7 +4,8 @@ module.exports = {
       "no-console": 0
      },
     "extends": [
-      "eslint:recommended"
+      "eslint:recommended",
+      "plugin:react/recommended"
     ],
     "parser": "babel-eslint"
   };
