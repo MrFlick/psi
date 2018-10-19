@@ -21,9 +21,16 @@ module.exports = function (sequelize) {
         end_date: Sequelize.DATE
         }, 
         {timestamps: false});
+    var Roster = sequelize.define("class_roster", {
+        class_id:{type: Sequelize.INTEGER, primaryKey: true},
+        person_id: {type: Sequelize.INTEGER, primaryKey: true},
+        }, 
+        {freezeTableName:true, timestamps: false});
+    Roster.belongsTo(Person, {foreignKey: 'person_id'});
     return {
         Person: Person,
         Course: Course,
-        Term: Term
+        Term: Term,
+        Roster: Roster
     };
 };
