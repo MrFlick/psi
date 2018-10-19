@@ -11,14 +11,13 @@ var sequelize = new Sequelize("sqlite:db/data.sqlite3", {
 });
 
 const api = require("./routes/api")(sequelize)
+const user = require("./routes/user")
 
 app.use(express.static('public'))
 app.use(express.static('react-build'))
 app.use("/api", api)
+app.use("/", user)
 
-app.get("/", function(req, res) {
-	res.render("index");
-});
 
 sequelize.sync().then(function() {
     app.listen(port, () => console.log(`Example app listening on port ${port}!`))

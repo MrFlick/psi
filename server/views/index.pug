@@ -1,12 +1,4 @@
-html
+extends layout
 
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
-    title App Home
-
-  body
-    div(id="root")
-    noscript
-      You need to enable JavaScript to run this app.
-    script(src="bundle.js")
+block content
+  div(id="root", data-view="home")
