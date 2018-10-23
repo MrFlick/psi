@@ -1,6 +1,6 @@
 import React, { Component} from "react";
 import PropTypes from 'prop-types';
-import UrlFor from "./UrlFor";
+import ClassList from "./ClassList";
 
 class TermView extends Component{
   constructor(props) {
@@ -12,11 +12,7 @@ class TermView extends Component{
     return(
       <div className="App">
         <h1> Term {this.props.term_id}</h1>
-        <ul>
-        {this.state.classes.map((tclass,i) => {
-            return <li key={i}><a href={UrlFor.classPage(tclass.class_id)}>{tclass.course_name}</a></li>
-        })}
-        </ul>
+        <ClassList classes={this.state.classes}></ClassList>
       </div>
     );
   }
