@@ -21,6 +21,18 @@ module.exports = function (sequelize) {
         end_date: Sequelize.DATE
         }, 
         {timestamps: false});
+    var TermClass = sequelize.define("classes", {
+        class_id: {type: Sequelize.INTEGER, primaryKey: true},
+        term_id: Sequelize.INTEGER,
+        course_id: Sequelize.TEXT,
+        day_of_week: Sequelize.TEXT,
+        start_time: Sequelize.INTEGER,
+        end_time: Sequelize.INTEGER,
+        location: Sequelize.TEXT
+        },
+        {timestamps: false});
+    Term.hasMany(TermClass, {foreignKey: 'term_id'})
+    TermClass.belongsTo(Course, {foreignKey: 'course_id'})
     var Roster = sequelize.define("class_roster", {
         class_id:{type: Sequelize.INTEGER, primaryKey: true},
         person_id: {type: Sequelize.INTEGER, primaryKey: true},
@@ -31,6 +43,7 @@ module.exports = function (sequelize) {
         Person: Person,
         Course: Course,
         Term: Term,
-        Roster: Roster
+        Roster: Roster,
+        TermClass: TermClass
     };
 };

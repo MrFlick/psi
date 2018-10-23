@@ -28,7 +28,7 @@ class ClassView extends Component{
 }
 
 ClassView.propTypes = {
-  class_id: PropTypes.number
+  class_id: PropTypes.string
 }
 
 export default ClassView;

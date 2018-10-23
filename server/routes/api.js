@@ -38,6 +38,20 @@ function get_router(sequelize) {
       res.send(term)
     })
   })
+  router.get('/terms/:tid/classes', function (req, res) {
+    var query = {where: {term_id: req.params.tid}, include:[models.Course]}
+    models.TermClass.findAll(query).
+    then(data => {
+      return data.map(x => {
+        x = x.get({plain: true})
+        x.course_name = x.course.course_name
+        delete x.course
+        return x
+      })
+    }).then(classes => {
+      res.send(classes)
+    })
+  })
   router.get('/roster/:cid', function (req, res) {
     var query = {where: {class_id: req.params.cid}, include:[models.Person]}
     models.Roster.findAll(query).
