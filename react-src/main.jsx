@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import HomeView from "./HomeView";
 import TermView from "./TermView";
 import ClassView from "./ClassView";
+import StudentView from "./StudentView";
 
 
 var root = document.getElementById("root");
@@ -17,6 +18,9 @@ switch(view) {
         break;
     case "term":
         ReactDOM.render(React.cloneElement(<TermView/>, props), root);
+        break;
+    case "student":
+        ReactDOM.render(React.cloneElement(<StudentView/>, props), root);
         break;
     default:
         ReactDOM.render(React.cloneElement(<HomeView/>, props), root);

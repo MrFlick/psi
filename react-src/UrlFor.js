@@ -4,6 +4,9 @@ var UrlFor = {
     },
     classPage: class_id => {
         return `/class/${class_id}`
+    },
+    studentPage: person_id => {
+        return `/student/${person_id}`
     }
 }
 

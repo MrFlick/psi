@@ -25,7 +25,7 @@ function get_router(sequelize) {
       then(data => data.map(x => {
         x = x.get({plain: true})
         x.course_name = x.course.course_name
-        x.term_name = x.course.term_name
+        x.term_name = x.term.term_name
         delete x.course
         delete x.class_roster
         delete x.term
@@ -67,14 +67,13 @@ function get_router(sequelize) {
       res.send(classes)
     })
   })
-  router.get('/roster/:cid', function (req, res) {
-    var query = {where: {class_id: req.params.cid}, include:[models.Person]}
-    models.Roster.findAll(query).
+  router.get('/classes/:cid/students', function (req, res) {
+    models.TermClass.findById(req.params.cid).
+    then(term_class => {return term_class.getPeople()}).
     then(data => {
       return data.map(x => {
         x = x.get({plain: true})
-        x.full_name = x.person.full_name
-        delete x.person
+        delete x.class_roster
         return x
       })
     }).

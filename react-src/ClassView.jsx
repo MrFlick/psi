@@ -1,5 +1,6 @@
 import React, { Component} from "react";
 import PropTypes from 'prop-types';
+import StudentList from "./StudentList";
 
 class ClassView extends Component{
   constructor(props) {
@@ -11,17 +12,13 @@ class ClassView extends Component{
     return(
       <div className="App">
         <h1> Class {this.props.class_id}</h1>
-        <ul>
-        {this.state.students.map((student,i) => {
-            return <li key={i}>{student.full_name}</li>
-        })}
-        </ul>
+        <StudentList students={this.state.students}></StudentList>
       </div>
     );
   }
 
   componentDidMount() {
-    fetch("/api/roster/" + this.props.class_id)
+    fetch(`/api/classes/${this.props.class_id}/students`)
     .then(response => response.json())
     .then(data => this.setState({students: data}))
   }
