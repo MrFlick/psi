@@ -7,7 +7,11 @@ app.set("view engine", "pug");
 
 var Sequelize = require("sequelize")
 var sequelize = new Sequelize("sqlite:db/data.sqlite3", {
-    operatorsAliases: true
+    operatorsAliases: true,
+    define: {
+        underscore: true,
+        timestamps: false
+    }
 });
 
 const api = require("./routes/api")(sequelize)

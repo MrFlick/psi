@@ -1,7 +1,6 @@
 var express = require('express')
 var router = express.Router()
 
-
 function get_router(sequelize) {
   var models = require("../models")(sequelize);
 
@@ -17,6 +16,22 @@ function get_router(sequelize) {
     models.Person.findById(req.params.pid).then(person => {
       res.send(person)
     })
+  })
+  router.get('/people/:pid/classes', function (req, res) {
+    models.Person.findById(req.params.pid).
+      then(person => {
+        return person.getClasses({include: [models.Course, models.Term]})
+      }).
+      then(data => data.map(x => {
+        x = x.get({plain: true})
+        x.course_name = x.course.course_name
+        x.term_name = x.course.term_name
+        delete x.course
+        delete x.class_roster
+        delete x.term
+        return x
+      })).
+      then(classes => {res.send(classes)})
   })
   router.get('/courses', function (req, res) {
     models.Course.findAll().then(courses => {
