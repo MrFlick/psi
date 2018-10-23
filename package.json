@@ -7,9 +7,10 @@
     "start": "node server/server.js",
     "lint": "eslint server/*.js",
     "build": "webpack --mode development",
-    "watchrun": "concurrently \"webpack --mode development --watch\" \"node server/server.js\"",
+    "dev": "concurrently \"webpack --mode development --watch\" \"nodemon server/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": "github:MrFlick/psi-class-tracker",
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -32,6 +33,7 @@
     "eslint": "^5.7.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-react": "^7.11.1",
+    "nodemon": "^1.18.4",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   }
