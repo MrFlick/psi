@@ -1,6 +1,7 @@
 import React, { Component} from "react";
 import PropTypes from 'prop-types';
 import StudentList from "./StudentList";
+import PersonFinder from "./PersonFinder"
 
 class ClassView extends Component{
   constructor(props) {
@@ -13,6 +14,7 @@ class ClassView extends Component{
       <div className="App">
         <h1> Class {this.props.class_id}</h1>
         <StudentList students={this.state.students}></StudentList>
+        <PersonFinder people={this.state.students}></PersonFinder>
       </div>
     );
   }
