@@ -7,11 +7,15 @@ class StudentList extends Component {
     return (
       <div>
         <h1>List of Students</h1>
-        <ul>
-        {this.props.students.map((row, i)=>{
-          return <li key={i}><a href={UlrFor.studentPage(row.person_id)}>{row.full_name}</a></li>
+        <div className="ui cards">
+        {this.props.students.map(row=>{
+          return <div key={row.person_id} className="card student">
+          <div className="content">
+            <a href={UlrFor.studentPage(row.person_id)}>{row.full_name}</a>
+            </div>
+          </div>
         })}
-        </ul>
+        </div>
       </div>
     );
   }
