@@ -6,7 +6,6 @@ class StudentList extends Component {
   render() {
     return (
       <div>
-        <h1>List of Students</h1>
         <div className="ui cards">
         {this.props.students.map(row=>{
           return <div key={row.person_id} className="card student">

@@ -13,8 +13,12 @@ class ClassView extends Component{
     return(
       <div className="App">
         <h1> Class {this.props.class_id}</h1>
+        <div className="ui container">
         <StudentList students={this.state.students}></StudentList>
+        </div>
+        <div className="ui container">
         <PersonFinder people={this.state.students}></PersonFinder>
+        </div>
       </div>
     );
   }

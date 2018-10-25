@@ -7,11 +7,22 @@ class ClassList extends Component {
     return (
       <div>
         <h1>List of Classes</h1>
-        <ul>
-        {this.props.classes.map((row, i)=>{
-          return <li key={i}><a href={UlrFor.classPage(row.class_id)}>{row.course_name}</a></li>
+        <div className="ui container">
+        <div className="ui cards">
+        {this.props.classes.map(row=>{
+          return <a key={row.class_id} className="card class"
+          href={UlrFor.classPage(row.class_id)}>
+          <div className="content">
+            <div className="header">{row.course_id}</div>
+            <div className="description">{row.course_name}</div>
+          </div>
+          <div className="extra content">
+            <p>{row.day_of_week}</p>
+          </div>
+          </a>
         })}
-        </ul>
+        </div> 
+        </div>
       </div>
     );
   }

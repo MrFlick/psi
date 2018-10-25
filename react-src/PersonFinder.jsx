@@ -98,19 +98,25 @@ class PersonFinder extends Component{
 
   render(){
     return(
-      <div className="autocomplete" style={{width: "300px"}}>
-        <input type="text"
-            onChange={this.inputChange}
-            onKeyDown={this.keyPressed}
-            value={this.state.searchTerm}
-            ref={this.textInput}/>
-        {this.state.matches.length > 0 && <div>{
+      <div className="ui search" style={{width: "300px"}}>
+            <div className="ui icon input">
+            <input 
+                className="prompt" type="text" 
+                placeholder="Find Student..."
+                onChange={this.inputChange}
+                onKeyDown={this.keyPressed}
+                value={this.state.searchTerm}
+                ref={this.textInput}/>
+            <i className="search icon"></i>
+        </div>
+        {this.state.matches.length > 0 && <div className="results visible"
+        style={{display: "block"}}>{
             this.state.matches.map((match) => {
-                return <div 
+                var cssClass = (match.key==this.state.selectedKey ? "result active":"result")
+                return <a className={cssClass}
                 key={match.key}
-                style={{fontWeight: (match.key==this.state.selectedKey ? "bold":"normal")}} 
                 onClick={() => this.completeMatch(match)}
-                >{match.display}</div>
+                ><div className="content">{match.display}</div></a>
             })
         }</div>}
       </div>
