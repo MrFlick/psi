@@ -62,6 +62,11 @@ class PersonFinder extends Component{
             selectedIndex: newIndex,
             selectedKey: newKey
         })
+    } else if (key=="Tab") {
+        e.preventDefault()
+        if (this.state.matches.length>0) {
+            this.completeMatch(this.state.matches[0])
+        }
     } else if (key=="Enter") {
         e.preventDefault()
         if (this.state.selectedIndex>-1) {
