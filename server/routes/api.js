@@ -50,7 +50,14 @@ function get_router(sequelize) {
   })
   router.get('/terms/:tid', function (req, res) {
     models.Term.findById(req.params.tid).then(term => {
-      res.send(term)
+      term.countStudents().then(student_count => {
+        term.countClasses().then(class_count => {
+          var x = term.get({plain: true})
+          x.student_count = student_count
+          x.class_count = class_count
+          res.send(x)
+        })
+      })
     })
   })
   router.get('/terms/:tid/classes', function (req, res) {

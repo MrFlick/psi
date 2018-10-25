@@ -18,6 +18,16 @@ module.exports = function (sequelize) {
         start_date: Sequelize.DATE,
         end_date: Sequelize.DATE
     });
+    Term.prototype.countStudents = function() {
+        return ClassRoster.count({
+            distinct: true,
+            col: "person_id",
+            include: [
+                {model: TermClass,
+                where: {term_id: this.term_id} }
+            ]
+        })
+    }
     var TermClass = sequelize.define("classes", {
         class_id: {type: Sequelize.INTEGER, primaryKey: true},
         term_id: Sequelize.INTEGER,
@@ -29,6 +39,12 @@ module.exports = function (sequelize) {
     });
     TermClass.belongsTo(Term, {foreignKey: 'term_id'})
     TermClass.belongsTo(Course, {foreignKey: 'course_id'})
+    Term.hasMany(TermClass, {foreignKey: 'term_id'})
+    var ClassRoster = sequelize.define("class_roster", {
+        class_id: {type: Sequelize.INTEGER, primaryKey: true},
+        perspn_id: {type: Sequelize.INTEGER, primaryKey: true},
+    }, {freezeTableName: true});
+    ClassRoster.hasMany(TermClass,  {foreignKey: 'class_id'})
     Person.belongsToMany(TermClass, {
         through: 'class_roster',
         foreignKey: 'person_id',
