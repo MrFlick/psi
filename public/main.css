@@ -1,5 +1,12 @@
-body {
-    margin: 30px;
+.ui.menu {
+    background-color: #458cc9;
+}
+.ui.menu .item {
+    color:white;
+}
+
+div.main {
+    margin: 2px 30px;
 }
 
 .ui.cards .card.student {

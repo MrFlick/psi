@@ -10,8 +10,14 @@ html
       crossorigin="anonymous")
     script(src="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js")
     title App Home
-
   body
-    block content
-    noscript You need to enable JavaScript to run this app.
-    script(src="/bundle.js")
+    div.ui.borderless.huge.menu
+      a.header.item(href="/") PSI Home
+      a.item(href="/") Classes
+      a.item(href="/") People
+      a.item(href="/") Terms
+      a.item(href="/") Courses
+    div.main
+      block content
+      noscript You need to enable JavaScript to run this app.
+      script(src="/bundle.js")
