@@ -7,10 +7,14 @@ module.exports = function (sequelize) {
         full_name: Sequelize.TEXT,
         email: Sequelize.TEXT
     });
+
     var Course = sequelize.define("courses", {
         course_id: {type: Sequelize.TEXT, primaryKey: true},
         course_name: Sequelize.TEXT,
         course_desc: Sequelize.TEXT,
+        course_topic: Sequelize.TEXT,
+        course_level: Sequelize.TEXT,
+        course_sequence: Sequelize.INTEGER,
         prev_course_id: Sequelize.TEXT
     });
     var Term = sequelize.define("terms", {

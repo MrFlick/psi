@@ -10,6 +10,9 @@ CREATE TABLE courses (
 	course_id TEXT PRIMARY KEY,
 	course_name TEXT,
 	course_desc TEXT,
+	course_topic TEXT,
+	course_level TEXT,
+	course_sequence INT,
 	prev_course_id TEXT
 );
 
