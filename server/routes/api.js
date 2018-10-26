@@ -63,22 +63,36 @@ function get_router(sequelize) {
     })
   })
   router.get('/terms/:tid/classes', function (req, res) {
-    var query = {where: {term_id: req.params.tid}, include:[models.Course]}
+    var query = {where: {term_id: req.params.tid},
+      include:[models.Course,
+        {
+          model: models.Person,
+          trough: 'class_teachers',
+          as: 'teachers'
+        }]}
     models.TermClass.findAll(query).
     then(data => {
       return data.map(x => {
         x = x.get({plain: true})
-        x.course_name = x.course.course_name
-        delete x.course
+        x.teachers.map(y => {
+          delete y.class_teachers
+          return y
+        })
         return x
       })
     }).then(classes => {
       res.send(classes)
     })
   })
+  router.get('/classes/:cid', function (req, res) {
+    models.TermClass.findById(req.params.cid).
+    then(term => {
+      res.send(term)
+    })
+  })
   router.get('/classes/:cid/students', function (req, res) {
     models.TermClass.findById(req.params.cid).
-    then(term_class => {return term_class.getPeople()}).
+    then(term_class => {return term_class.getStudents()}).
     then(data => {
       return data.map(x => {
         x = x.get({plain: true})

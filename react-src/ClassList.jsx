@@ -23,10 +23,15 @@ class ClassList extends Component {
             href={UlrFor.classPage(row.class_id)}>
           <div className="content">
             <div className="header">{row.course_id}</div>
-            <div className="description">{row.course_name}</div>
+            <div className="description">
+              {`${row.course.course_name}: ${row.course.course_desc}`}
+            </div>
           </div>
           <div className="extra content">
-            <p>{row.day_of_week}</p>
+              {row.day_of_week}
+            <span className="right floated">
+              {row.teachers.map(x => x.full_name).join(", ")}
+            </span>
           </div>
           </a>
         })}

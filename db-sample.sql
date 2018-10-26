@@ -24,21 +24,21 @@ VALUES (1, "Del Close"),
 
 INSERT INTO courses(course_id, course_name, course_desc, 
     course_topic, course_level, course_sequence, prev_course_id)
-VALUES ("IMPROV-1", "Improv 1", "Intro to Improv", 
+VALUES ("IMPROV-1", "Improv 1", "Intro to Improv",
     "IMPROV", "1", 100, NULL),
-("IMPROV-2", "Improv 2", "Improv Skills", 
+("IMPROV-2", "Improv 2", "Improv Skills",
     "IMPROV", "2", 150, "IMPROV-1"),
-("IMED-1", "Intermediate 1", "Scene Work", 
+("IMED-1", "Intermediate 1", "Scene Work",
     "IMED", "1", 200, "IMPROV-2"),
-("IMED-2", "Intermediate 2", "Advanced Scene Work", 
+("IMED-2", "Intermediate 2", "Advanced Scene Work",
     "IMED", "2", 220, "IMED-1"),
-("IMED-3", "Intermediate 3", "Long Form Scene Work", 
+("IMED-3", "Intermediate 3", "Long Form Scene Work",
     "IMED", "3", 240, "IMED-2"),
-("LF-1", "Longform 1", "The Harold", 
+("LF-1", "Longform 1", "The Harold",
     "LF", "1", 300, "IMED-3"),
-("LF-2", "Longform 2", "The Deconstruction", 
+("LF-2", "Longform 2", "The Deconstruction",
     "LF", "2", 320, "LF-1"),
-("LF-3", "Longform 3", "The Performer", 
+("LF-3", "Longform 3", "The Performer",
     "LF", "3", 340, "LF-2");
 
 INSERT INTO terms(term_id, term_name)
@@ -60,7 +60,7 @@ VALUES (1, 1), (2, 2), (3, 1), (4, 2),
 (5, 1), (6, 2), (7, 1), (8,2);
 
 INSERT INTO class_roster(class_id, person_id)
-VALUES (1, 3), (1, 4), (1, 5), 
+VALUES (1, 3), (1, 4), (1, 5),
 (2, 6), (2, 7), (2, 8),
 (3, 9), (3, 10), (3, 11),
 (4, 12), (4, 13), (4, 14);

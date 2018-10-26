@@ -57,6 +57,18 @@ module.exports = function (sequelize) {
     });
     TermClass.belongsToMany(Person, {
         through: 'class_roster',
+        as: { singular: 'student', plural: 'students' },
+        foreignKey: 'class_id',
+        other_key: 'person_id'
+    });
+    Person.belongsToMany(TermClass, {
+        through: 'class_teachers',
+        foreignKey: 'person_id',
+        other_key: 'class_id'
+    });
+    TermClass.belongsToMany(Person, {
+        through: 'class_teachers',
+        as: { singular: 'teacher', plural: 'teachers' },
         foreignKey: 'class_id',
         other_key: 'person_id'
     });
