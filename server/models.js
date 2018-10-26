@@ -2,7 +2,8 @@ var Sequelize = require('sequelize');
  
 module.exports = function (sequelize) {
     var Person = sequelize.define("people", {
-        person_id: {type: Sequelize.INTEGER, primaryKey: true},
+        person_id: {type: Sequelize.INTEGER, 
+            primaryKey: true, autoIncrement: true},
         full_name: Sequelize.TEXT,
         email: Sequelize.TEXT
     });
