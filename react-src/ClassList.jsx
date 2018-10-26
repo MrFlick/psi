@@ -10,8 +10,17 @@ class ClassList extends Component {
         <div className="ui container">
         <div className="ui cards">
         {this.props.classes.map(row=>{
-          return <a key={row.class_id} className="card class"
-          href={UlrFor.classPage(row.class_id)}>
+          var cardColor=""
+          if (row.course_id.match(/^IMPROV/)) {
+            cardColor=" green"
+          } else if (row.course_id.match(/^IMED/)) {
+            cardColor=" orange"
+          } else if (row.course_id.match(/^LF/)) {
+            cardColor=" red"
+          }
+          return <a key={row.class_id} 
+            className={"card class" + cardColor}
+            href={UlrFor.classPage(row.class_id)}>
           <div className="content">
             <div className="header">{row.course_id}</div>
             <div className="description">{row.course_name}</div>
