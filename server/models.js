@@ -42,7 +42,7 @@ module.exports = function (sequelize) {
     Term.hasMany(TermClass, {foreignKey: 'term_id'})
     var ClassRoster = sequelize.define("class_roster", {
         class_id: {type: Sequelize.INTEGER, primaryKey: true},
-        perspn_id: {type: Sequelize.INTEGER, primaryKey: true},
+        person_id: {type: Sequelize.INTEGER, primaryKey: true},
     }, {freezeTableName: true});
     ClassRoster.hasMany(TermClass,  {foreignKey: 'class_id'})
     Person.belongsToMany(TermClass, {
