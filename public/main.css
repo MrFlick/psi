@@ -4,6 +4,9 @@
 .ui.menu .item {
     color:white;
 }
+.ui.menu a.item:hover{
+    color:#fadb35;
+}
 
 div.main {
     margin: 2px 30px;
