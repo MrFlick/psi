@@ -13,7 +13,13 @@ class ClassView extends Component{
     return(
       <div className="App">
         <h1> Class {this.props.class_id}</h1>
+        {this.state.course && <div>
+        <p>{this.state.course.course_id}</p>
+        <p>{this.state.course.course_name}</p>
+        <p>{this.state.course.course_desc}</p>
+        </div>}
         <div className="ui container">
+        <h3>Enrolled Students</h3>
         <StudentList students={this.state.students}></StudentList>
         </div>
         <div className="ui container">
@@ -25,8 +31,11 @@ class ClassView extends Component{
 
   componentDidMount() {
     fetch(`/api/classes/${this.props.class_id}/students`)
-    .then(response => response.json())
-    .then(data => this.setState({students: data}))
+      .then(response => response.json())
+      .then(data => this.setState({students: data}))
+    fetch(`/api/classes/${this.props.class_id}`)
+      .then(response => response.json())
+      .then(data => this.setState(data))
   }
 }
 

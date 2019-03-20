@@ -85,10 +85,21 @@ function get_router(sequelize) {
     })
   })
   router.get('/classes/:cid', function (req, res) {
-    models.TermClass.findByPk(req.params.cid).
-    then(term => {
-      res.send(term)
-    })
+    models.TermClass.findByPk(req.params.cid).then(
+      term_class => { term_class.getCourse().then(
+          course => {term_class.getTeachers().then(
+            teachers => {
+              term_class = term_class.get({plain: true})
+              delete term_class.course_id
+              term_class.course = course
+              term_class.teachers = teachers.map(y => {
+                y = y.get({plain: true})
+                console.log(y.class_teachers)
+                delete y.class_teachers
+                return y
+              })
+              res.send(term_class)
+      })})})
   })
   router.get('/classes/:cid/students', function (req, res) {
     models.TermClass.findByPk(req.params.cid).
