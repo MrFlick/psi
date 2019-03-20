@@ -15,12 +15,12 @@ function get_router(sequelize) {
     })
   })
   router.get('/people/:pid', function (req, res) {
-    models.Person.findById(req.params.pid).then(person => {
+    models.Person.findByPk(req.params.pid).then(person => {
       res.send(person)
     })
   })
   router.get('/people/:pid/classes', function (req, res) {
-    models.Person.findById(req.params.pid).
+    models.Person.findByPk(req.params.pid).
       then(person => {
         return person.getClasses({include: [models.Course, models.Term]})
       }).
@@ -41,7 +41,7 @@ function get_router(sequelize) {
     })
   })
   router.get('/courses/:cid', function (req, res) {
-    models.Course.findById(req.params.cid).then(course => {
+    models.Course.findByPk(req.params.cid).then(course => {
       res.send(course)
     })
   })
@@ -51,7 +51,7 @@ function get_router(sequelize) {
     })
   })
   router.get('/terms/:tid', function (req, res) {
-    models.Term.findById(req.params.tid).then(term => {
+    models.Term.findByPk(req.params.tid).then(term => {
       term.countStudents().then(student_count => {
         term.countClasses().then(class_count => {
           var x = term.get({plain: true})
@@ -85,13 +85,13 @@ function get_router(sequelize) {
     })
   })
   router.get('/classes/:cid', function (req, res) {
-    models.TermClass.findById(req.params.cid).
+    models.TermClass.findByPk(req.params.cid).
     then(term => {
       res.send(term)
     })
   })
   router.get('/classes/:cid/students', function (req, res) {
-    models.TermClass.findById(req.params.cid).
+    models.TermClass.findByPk(req.params.cid).
     then(term_class => {return term_class.getStudents()}).
     then(data => {
       return data.map(x => {
@@ -120,7 +120,7 @@ function get_router(sequelize) {
     var getPerson = function(data, t) {
       var person_data = models.Person.build(data).get({plain: true})
       if (person_data.person_id) {
-        return models.Person.findById(person_data.person_id)
+        return models.Person.findByPk(person_data.person_id)
       } else {
         return models.Person.create(person_data, {transaction: t})
       }
