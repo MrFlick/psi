@@ -13,11 +13,7 @@ class ClassView extends Component{
     return(
       <div className="App">
         <h1> Class {this.props.class_id}</h1>
-        {this.state.course && <div>
-        <p>{this.state.course.course_id}</p>
-        <p>{this.state.course.course_name}</p>
-        <p>{this.state.course.course_desc}</p>
-        </div>}
+        {this.state.course && <CourseDetails {...this.state.course}/>}
         <div className="ui container">
         <h3>Enrolled Students</h3>
         <StudentList students={this.state.students}></StudentList>
@@ -41,6 +37,19 @@ class ClassView extends Component{
 
 ClassView.propTypes = {
   class_id: PropTypes.string
+}
+
+function CourseDetails(props) {
+  return <div>
+    <p>{props.course_id}</p>  
+    <p>{props.course_name} - {props.course_desc}</p>
+  </div>
+}
+
+CourseDetails.propTypes = {
+  course_id: PropTypes.string,
+  course_name: PropTypes.string,
+  course_desc: PropTypes.string,
 }
 
 export default ClassView;
