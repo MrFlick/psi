@@ -1,170 +1,177 @@
-var express = require('express')
-var router = express.Router()
+/* eslint-disable no-throw-literal */
+const express = require('express');
+const modelSource = require('../models');
 
-function get_router(sequelize) {
-  var models = require("../models")(sequelize);
+const router = express.Router();
+
+function getRouter(sequelize) {
+  const models = modelSource(sequelize);
 
   router.use(express.json());
 
-  router.get('/', function (req, res) {
-    res.send('hello')
-  })
-  router.get('/people', function (req, res) {
-    models.Person.findAll().then(people => {
-      res.send(people)
-    })
-  })
-  router.get('/people/:pid', function (req, res) {
-    models.Person.findByPk(req.params.pid).then(person => {
-      res.send(person)
-    })
-  })
-  router.get('/people/:pid/classes', function (req, res) {
-    models.Person.findByPk(req.params.pid).
-      then(person => {
-        return person.getClasses({include: [models.Course, models.Term]})
-      }).
-      then(data => data.map(x => {
-        x = x.get({plain: true})
-        x.course_name = x.course.course_name
-        x.term_name = x.term.term_name
-        delete x.course
-        delete x.class_roster
-        delete x.term
-        return x
-      })).
-      then(classes => {res.send(classes)})
-  })
-  router.get('/courses', function (req, res) {
-    models.Course.findAll().then(courses => {
-      res.send(courses)
-    })
-  })
-  router.get('/courses/:cid', function (req, res) {
-    models.Course.findByPk(req.params.cid).then(course => {
-      res.send(course)
-    })
-  })
-  router.get('/terms', function (req, res) {
-    models.Term.findAll().then(terms => {
-      res.send(terms)
-    })
-  })
-  router.get('/terms/:tid', function (req, res) {
-    models.Term.findByPk(req.params.tid).then(term => {
-      term.countStudents().then(student_count => {
-        term.countClasses().then(class_count => {
-          var x = term.get({plain: true})
-          x.student_count = student_count
-          x.class_count = class_count
-          res.send(x)
-        })
-      })
-    })
-  })
-  router.get('/terms/:tid/classes', function (req, res) {
-    var query = {where: {term_id: req.params.tid},
-      include:[models.Course,
+  router.get('/', (req, res) => {
+    res.send('hello');
+  });
+  router.get('/people', (req, res) => {
+    models.Person.findAll().then((people) => {
+      res.send(people);
+    });
+  });
+  router.get('/people/:pid', (req, res) => {
+    models.Person.findByPk(req.params.pid).then((person) => {
+      res.send(person);
+    });
+  });
+  router.get('/people/:pid/classes', ((req, res) => {
+    models.Person.findByPk(req.params.pid)
+      .then(person => person.getClasses({ include: [models.Course, models.Term] }))
+      .then(data => data.map((x) => {
+        const y = x.get({ plain: true });
+        y.course_name = y.course.course_name;
+        y.term_name = y.term.term_name;
+        delete y.course;
+        delete y.class_roster;
+        delete y.term;
+        return y;
+      }))
+      .then((classes) => { res.send(classes); });
+  }));
+  router.get('/courses', (req, res) => {
+    models.Course.findAll().then((courses) => {
+      res.send(courses);
+    });
+  });
+  router.get('/courses/:cid', (req, res) => {
+    models.Course.findByPk(req.params.cid).then((course) => {
+      res.send(course);
+    });
+  });
+  router.get('/terms', (req, res) => {
+    models.Term.findAll().then((terms) => {
+      res.send(terms);
+    });
+  });
+  router.get('/terms/:tid', (req, res) => {
+    models.Term.findByPk(req.params.tid).then((term) => {
+      term.countStudents().then((studentCount) => {
+        term.countClasses().then((classCount) => {
+          const x = term.get({ plain: true });
+          x.student_count = studentCount;
+          x.class_count = classCount;
+          res.send(x);
+        });
+      });
+    });
+  });
+  router.get('/terms/:tid/classes', (req, res) => {
+    const query = {
+      where: { term_id: req.params.tid },
+      include: [models.Course,
         {
           model: models.Person,
           trough: 'class_teachers',
-          as: 'teachers'
-        }]}
-    models.TermClass.findAll(query).
-    then(data => {
-      return data.map(x => {
-        x = x.get({plain: true})
-        x.teachers.map(y => {
-          delete y.class_teachers
-          return y
-        })
-        return x
-      })
-    }).then(classes => {
-      res.send(classes)
-    })
-  })
-  router.get('/classes/:cid', function (req, res) {
+          as: 'teachers',
+        }],
+    };
+    models.TermClass.findAll(query)
+      .then((data => data.map((x) => {
+        const y = x.get({ plain: true });
+        y.teachers.map((z) => {
+          const zz = z;
+          delete zz.class_teachers;
+          return zz;
+        });
+        return y;
+      })))
+      .then((classes) => {
+        res.send(classes);
+      });
+  });
+  router.get('/classes/:cid', (req, res) => {
     models.TermClass.findByPk(req.params.cid).then(
-      term_class => { term_class.getCourse().then(
-          course => {term_class.getTeachers().then(
-            teachers => {
-              term_class = term_class.get({plain: true})
-              delete term_class.course_id
-              term_class.course = course
-              term_class.teachers = teachers.map(y => {
-                y = y.get({plain: true})
-                console.log(y.class_teachers)
-                delete y.class_teachers
-                return y
-              })
-              res.send(term_class)
-      })})})
-  })
-  router.get('/classes/:cid/students', function (req, res) {
-    models.TermClass.findByPk(req.params.cid).
-    then(term_class => {return term_class.getStudents()}).
-    then(data => {
-      return data.map(x => {
-        x = x.get({plain: true})
-        delete x.class_roster
-        return x
-      })
-    }).
-    then(term => {
-      res.send(term)
-    })
-  })
-  router.post('/classes/:cid/students', function (req, res, next) {
-    var class_id = req.params.cid
-    var actions = Object.keys(req.body)
-    var knownActions = ["add"]
-    if (!actions.every(x => knownActions.includes(x))) {
-      throw {message: "Unrecognized action(s): " + 
-        actions.filter(x => ! knownActions.includes(x)).join(", ")}
-    }
-    Object.entries(req.body).forEach(([k,v]) => {
-      if (!Array.isArray(v)) {
-        throw {message: `Action '${k}' does not contain array` }
-      }
-    })
-    var getPerson = function(data, t) {
-      var person_data = models.Person.build(data).get({plain: true})
-      if (person_data.person_id) {
-        return models.Person.findByPk(person_data.person_id)
-      } else {
-        return models.Person.create(person_data, {transaction: t})
-      }
-    }
-    var results = []
-    sequelize.transaction({autocommit: false}, t => {
-      return Promise.all(req.body.add.map(raw_person =>{
-        return getPerson(raw_person, t).then( p => {
-          if (p) {
-            return p.addClass(class_id, {transaction: t})
-          } else {
-            throw {message: "Unable to find person:" + 
-              JSON.stringify(raw_person)}
-          }
-        }).catch(err => {
-          throw err
-        })
+      (termClass) => {
+        Promise.all([termClass.getCourse(), termClass.getTeachers()])
+          .then((values) => {
+            const course = values[0];
+            const teachers = values[1];
+            const termClassObj = termClass.get({ plain: true });
+            delete termClassObj.course_id;
+            termClassObj.course = course;
+            termClassObj.teachers = teachers.map((x) => {
+              const y = x.get({ plain: true });
+              delete y.class_teachers;
+              return y;
+            });
+            res.send(termClass);
+          });
+      },
+    );
+  });
+  router.get('/classes/:cid/students', (req, res) => {
+    models.TermClass.findByPk(req.params.cid)
+      .then(terClass => terClass.getStudents())
+      .then(data => data.map((x) => {
+        const y = x.get({ plain: true });
+        delete y.class_roster;
+        return y;
       }))
-    }).then(() => {
-      res.send(results)
-    }).catch(next)
-  })
-
-  // API Error Handler
-  router.use(function (err, req, res, next) {
-    console.log("ERROR HANDLER")
-    if (res.headersSent) {
-      return next(err)
+      .then((term) => {
+        res.send(term);
+      });
+  });
+  router.post('/classes/:cid/students', (req, res, next) => {
+    const classId = req.params.cid;
+    const actions = Object.keys(req.body);
+    const knownActions = ['add'];
+    if (!actions.every(x => knownActions.includes(x))) {
+      const badActions = actions.filter(x => !knownActions.includes(x));
+      throw {
+        message: `Unrecognized action(s): ${badActions.join(', ')}`,
+      };
     }
-    res.status(err.status || 500).json({message: err.message})
+    Object.entries(req.body).forEach(([k, v]) => {
+      if (!Array.isArray(v)) {
+        throw {
+          message: `Action '${k}' does not contain array`,
+        };
+      }
+    });
+    const getPerson = (data, t) => {
+      const personData = models.Person.build(data).get({ plain: true });
+      if (personData.person_id) {
+        return models.Person.findByPk(personData.person_id);
+      }
+      return models.Person.create(personData, { transaction: t });
+    };
+    sequelize.transaction({ autocommit: false }, (t) => {
+      return Promise.all(req.body.add.map((rawPerson) => {
+        return getPerson(rawPerson, t).then((p) => {
+          if (p) {
+            return p.addClass(classId, { transaction: t });
+          }
+          throw {
+            message: `Unable to find person: ${JSON.stringify(rawPerson)}`,
+          };
+        }).catch((err) => {
+          throw err;
+        });
+      }));
+    }).then((results) => {
+      res.send(results);
+    }).catch(next);
   });
 
-  return router
+  // API Error Handler
+  // eslint-disable-next-line consistent-return
+  router.use((err, req, res, next) => {
+    console.log('ERROR HANDLER');
+    if (res.headersSent) {
+      return next(err);
+    }
+    res.status(err.status || 500).json({ message: err.message });
+  });
+
+  return router;
 }
 
-module.exports = get_router
+module.exports = getRouter;

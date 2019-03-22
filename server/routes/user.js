@@ -1,20 +1,21 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express');
 
-router.get("/", function(req, res) {
-	res.render("index");
+const router = express.Router();
+
+router.get('/', (req, res) => {
+  res.render('index');
 });
 
-router.get("/term/:tid", function(req, res) {
-	res.render("term", {term_id: req.params.tid});
+router.get('/term/:tid', (req, res) => {
+  res.render('term', { term_id: req.params.tid });
 });
 
-router.get("/class/:cid", function(req, res) {
-	res.render("class", {class_id: req.params.cid});
+router.get('/class/:cid', (req, res) => {
+  res.render('class', { class_id: req.params.cid });
 });
 
-router.get("/student/:pid", function(req, res) {
-	res.render("student", {person_id: req.params.pid});
+router.get('/student/:pid', (req, res) => {
+  res.render('student', { person_id: req.params.pid });
 });
 
-module.exports = router
+module.exports = router;
