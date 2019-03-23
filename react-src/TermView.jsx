@@ -1,31 +1,35 @@
-import React, { Component} from "react";
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ClassList from "./ClassList";
+import ClassList from './ClassList';
+import camelCase from './CamelCase';
 
-class TermView extends Component{
+class TermView extends Component {
   constructor(props) {
-    super(props)
-    this.state = {classes: []}
-  }
-
-  render(){
-    return(
-      <div className="App">
-        <h1> Term {this.props.term_id}</h1>
-        <ClassList classes={this.state.classes}></ClassList>
-      </div>
-    );
+    super(props);
+    this.state = { classes: [] };
   }
 
   componentDidMount() {
-    fetch(`/api/terms/${this.props.term_id}/classes`)
-    .then(response => response.json())
-    .then(data => this.setState({classes: data}))
+    const { termId } = this.props;
+    fetch(`/api/terms/${termId}/classes`)
+      .then(response => response.json())
+      .then((data) => { this.setState({ classes: camelCase(data) }); });
+  }
+
+  render() {
+    const { termId } = this.props;
+    const { classes } = this.state;
+    return (
+      <div className="App">
+        <h1>{`Term ${termId}`}</h1>
+        <ClassList classes={classes} />
+      </div>
+    );
   }
 }
 
 TermView.propTypes = {
-  term_id: PropTypes.string
-}
+  termId: PropTypes.string.isRequired,
+};
 
 export default TermView;

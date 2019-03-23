@@ -1,31 +1,35 @@
-import React, { Component} from "react";
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import StudentClassList from "./StudentClassList";
+import StudentClassList from './StudentClassList';
+import camelCase from './CamelCase';
 
-class StudentView extends Component{
+class StudentView extends Component {
   constructor(props) {
-    super(props)
-    this.state = {classes: []}
-  }
-
-  render(){
-    return(
-      <div className="App">
-        <h1> Person {this.props.person_id}</h1>
-        <StudentClassList classes={this.state.classes}></StudentClassList>
-      </div>
-    );
+    super(props);
+    this.state = { classes: [] };
   }
 
   componentDidMount() {
-    fetch(`/api/people/${this.props.person_id}/classes`)
-    .then(response => response.json())
-    .then(data => this.setState({classes: data}))
+    const { personId } = this.props;
+    fetch(`/api/people/${personId}/classes`)
+      .then(response => response.json())
+      .then((data) => { this.setState({ classes: camelCase(data) }); });
+  }
+
+  render() {
+    const { personId } = this.props;
+    const { classes } = this.state;
+    return (
+      <div className="App">
+        <h1>{`Person ${personId}`}</h1>
+        <StudentClassList classes={classes} />
+      </div>
+    );
   }
 }
 
 StudentView.propTypes = {
-  person_id: PropTypes.string
-}
+  personId: PropTypes.string.isRequired,
+};
 
 export default StudentView;

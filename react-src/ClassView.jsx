@@ -1,55 +1,65 @@
-import React, { Component} from "react";
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import StudentList from "./StudentList";
-import PersonFinder from "./PersonFinder"
+import StudentList from './StudentList';
+import PersonFinder from './PersonFinder';
+import camelCase from './CamelCase';
 
-class ClassView extends Component{
+class ClassView extends Component {
   constructor(props) {
-    super(props)
-    this.state = {students: []}
+    super(props);
+    this.state = { students: [] };
   }
 
-  render(){
-    return(
+  componentDidMount() {
+    const { classId } = this.props;
+    fetch(`/api/classes/${classId}/students`)
+      .then(response => response.json())
+      .then((data) => {
+        this.setState({ students: camelCase(data) });
+      });
+    fetch(`/api/classes/${classId}`)
+      .then(response => response.json())
+      .then((data) => {
+        this.setState(camelCase(data));
+      });
+  }
+
+  render() {
+    const { course, students } = this.state;
+    const { classId } = this.props;
+    return (
       <div className="App">
-        <h1> Class {this.props.class_id}</h1>
-        {this.state.course && <CourseDetails {...this.state.course}/>}
+        <h1>{`Class ${classId}`}</h1>
+        {course && <CourseDetails {...course} />}
         <div className="ui container">
-        <h3>Enrolled Students</h3>
-        <StudentList students={this.state.students}></StudentList>
+          <h3>Enrolled Students</h3>
+          <StudentList students={students} />
         </div>
         <div className="ui container">
-        <PersonFinder people={this.state.students}></PersonFinder>
+          <PersonFinder people={students} />
         </div>
       </div>
     );
   }
-
-  componentDidMount() {
-    fetch(`/api/classes/${this.props.class_id}/students`)
-      .then(response => response.json())
-      .then(data => this.setState({students: data}))
-    fetch(`/api/classes/${this.props.class_id}`)
-      .then(response => response.json())
-      .then(data => this.setState(data))
-  }
 }
 
 ClassView.propTypes = {
-  class_id: PropTypes.string
-}
+  classId: PropTypes.string.isRequired,
+};
 
-function CourseDetails(props) {
-  return <div>
-    <p>{props.course_id}</p>  
-    <p>{props.course_name} - {props.course_desc}</p>
-  </div>
+function CourseDetails({ courseId, courseName, courseDesc }) {
+  return (
+    <div>
+      <p>{courseId}</p>
+      <p>{`${courseName} - ${courseDesc}`}</p>
+    </div>
+  );
 }
 
 CourseDetails.propTypes = {
-  course_id: PropTypes.string,
-  course_name: PropTypes.string,
-  course_desc: PropTypes.string,
-}
+  courseId: PropTypes.string.isRequired,
+  courseName: PropTypes.string.isRequired,
+  courseDesc: PropTypes.string.isRequired,
+};
 
 export default ClassView;
