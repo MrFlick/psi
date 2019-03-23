@@ -8,10 +8,10 @@ function defaultPersonFinder(searchTerm, list) {
   const matches = [];
   const re = new RegExp(searchTerm, 'i');
   list.forEach((person) => {
-    if (re.test(person.full_name)) {
+    if (re.test(person.fullName)) {
       matches.push({
-        display: person.full_name,
-        key: person.person_id,
+        display: person.fullName,
+        key: person.personId,
         item: person,
       });
     }
