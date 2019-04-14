@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import UlrFor from './UrlFor';
 
 function TermList({ terms }) {
@@ -17,24 +18,22 @@ TermList.propTypes = {
   terms: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-function TermCard({ termId, termName, startDate }) {
+function TermCard({ termId, termName }) {
   return (
-    <a
+    <Link
       className="card term"
-      href={UlrFor.termPage(termId)}
+      to={UlrFor.termPage(termId)}
     >
       <div className="content">
         <div className="header">{termName}</div>
-        <div className="description">{startDate}</div>
       </div>
-    </a>
+    </Link>
   );
 }
 
 TermCard.propTypes = {
-  termId: PropTypes.string.isRequired,
+  termId: PropTypes.number.isRequired,
   termName: PropTypes.string.isRequired,
-  startDate: PropTypes.string.isRequired,
 };
 
 

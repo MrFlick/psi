@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import UrlFor from './UrlFor';
 
 function StudentClassList({ classes }) {
@@ -10,8 +11,8 @@ function StudentClassList({ classes }) {
           {classes.map((row, i) => {
             return (
               <tr key={i}>
-                <td><a href={UrlFor.classPage(row.classId)}>{row.courseName}</a></td>
-                <td><a href={UrlFor.termPage(row.termId)}>{row.termName}</a></td>
+                <td><Link to={UrlFor.classPage(row.classId)}>{row.courseName}</Link></td>
+                <td><Link to={UrlFor.termPage(row.termId)}>{row.termName}</Link></td>
               </tr>
             );
           })}

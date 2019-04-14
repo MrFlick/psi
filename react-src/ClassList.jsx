@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import UlrFor from './UrlFor';
 
 function ClassList({ classes }) {
@@ -18,10 +19,10 @@ function ClassList({ classes }) {
               cardColor = ' red';
             }
             return (
-              <a
+              <Link
                 key={row.classId}
                 className={`card class${cardColor}`}
-                href={UlrFor.classPage(row.classId)}
+                to={UlrFor.classPage(row.classId)}
               >
                 <div className="content">
                   <div className="header">{row.courseId}</div>
@@ -35,7 +36,7 @@ function ClassList({ classes }) {
                     {row.teachers.map(x => x.fullName).join(', ')}
                   </span>
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>
