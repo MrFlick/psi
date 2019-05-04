@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ClassList from './ClassList';
-import camelCase from './CamelCase';
 
 class TermView extends Component {
   constructor(props) {
@@ -13,7 +12,7 @@ class TermView extends Component {
     const { termId } = this.props;
     fetch(`/api/terms/${termId}/classes`)
       .then(response => response.json())
-      .then((data) => { this.setState({ classes: camelCase(data) }); });
+      .then((data) => { this.setState({ classes: data }); });
   }
 
   render() {

@@ -1,6 +1,6 @@
 -- sample data
 
-INSERT INTO people (person_id, full_name)
+INSERT INTO people (personId, fullName)
 VALUES (1, "Del Close"),
 (2, "Mick Napier"),
 (3, "Anna Singleton"),
@@ -22,8 +22,8 @@ VALUES (1, "Del Close"),
 (19,'Matthew Jerie'),
 (20,'Tyler Fraley');
 
-INSERT INTO courses(course_id, course_name, course_desc, 
-    course_topic, course_level, course_sequence, prev_course_id)
+INSERT INTO courses(courseId, courseName, courseDesc, 
+    courseTopic, courseLevel, courseSequence, prevCourseId)
 VALUES ("IMPROV-1", "Improv 1", "Intro to Improv",
     "IMPROV", "1", 100, NULL),
 ("IMPROV-2", "Improv 2", "Improv Skills",
@@ -41,11 +41,11 @@ VALUES ("IMPROV-1", "Improv 1", "Intro to Improv",
 ("LF-3", "Longform 3", "The Performer",
     "LF", "3", 340, "LF-2");
 
-INSERT INTO terms(term_id, term_name)
+INSERT INTO terms(termId, termName)
 VALUES (1, "2018 - Term 4"),
 (2, "2018 - Term 5");
 
-INSERT INTO classes (class_id, term_id, course_id, day_of_week)
+INSERT INTO classes (classId, termId, courseId, dayOfWeek)
 VALUES (1, 2, "IMPROV-1", "Sun"),
 (2, 2, "IMPROV-2", "Thurs"),
 (3, 2, "IMPROV-2", "Sat"),
@@ -55,11 +55,11 @@ VALUES (1, 2, "IMPROV-1", "Sun"),
 (7, 2, "LF-1", "Tues"),
 (8, 2, "LF-2", "Mon");
 
-INSERT INTO class_teachers(class_id, person_id)
+INSERT INTO class_teachers(classId, personId)
 VALUES (1, 1), (2, 2), (3, 1), (4, 2), 
 (5, 1), (6, 2), (7, 1), (8,2);
 
-INSERT INTO class_roster(class_id, person_id)
+INSERT INTO class_roster(classId, personId)
 VALUES (1, 3), (1, 4), (1, 5),
 (2, 6), (2, 7), (2, 8),
 (3, 9), (3, 10), (3, 11),

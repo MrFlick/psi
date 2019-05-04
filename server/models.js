@@ -2,81 +2,81 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
   const Person = sequelize.define('people', {
-    person_id: {
+    personId: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    full_name: Sequelize.TEXT,
+    fullName: Sequelize.TEXT,
     email: Sequelize.TEXT,
   });
 
   const Course = sequelize.define('courses', {
-    course_id: { type: Sequelize.TEXT, primaryKey: true },
-    course_name: Sequelize.TEXT,
-    course_desc: Sequelize.TEXT,
-    course_topic: Sequelize.TEXT,
-    course_level: Sequelize.TEXT,
-    course_sequence: Sequelize.INTEGER,
-    prev_course_id: Sequelize.TEXT,
+    courseId: { type: Sequelize.TEXT, primaryKey: true },
+    courseName: Sequelize.TEXT,
+    courseDesc: Sequelize.TEXT,
+    courseTopic: Sequelize.TEXT,
+    courseLevel: Sequelize.TEXT,
+    courseSequence: Sequelize.INTEGER,
+    prevCourseId: Sequelize.TEXT,
   });
 
   const Term = sequelize.define('terms', {
-    term_id: { type: Sequelize.INTEGER, primaryKey: true },
-    term_name: Sequelize.TEXT,
-    start_date: Sequelize.DATE,
-    end_date: Sequelize.DATE,
+    termId: { type: Sequelize.INTEGER, primaryKey: true },
+    termName: Sequelize.TEXT,
+    startDate: Sequelize.DATE,
+    endDate: Sequelize.DATE,
   });
 
   const TermClass = sequelize.define('classes', {
-    class_id: { type: Sequelize.INTEGER, primaryKey: true },
-    term_id: Sequelize.INTEGER,
-    course_id: Sequelize.TEXT,
-    day_of_week: Sequelize.TEXT,
-    start_time: Sequelize.INTEGER,
-    end_time: Sequelize.INTEGER,
+    classId: { type: Sequelize.INTEGER, primaryKey: true },
+    termId: Sequelize.INTEGER,
+    courseId: Sequelize.TEXT,
+    dayOfWeek: Sequelize.TEXT,
+    startTime: Sequelize.INTEGER,
+    endTime: Sequelize.INTEGER,
     location: Sequelize.TEXT,
   });
 
-  TermClass.belongsTo(Term, { foreignKey: 'term_id' });
-  TermClass.belongsTo(Course, { foreignKey: 'course_id' });
-  Term.hasMany(TermClass, { foreignKey: 'term_id' });
+  TermClass.belongsTo(Term, { foreignKey: 'termId' });
+  TermClass.belongsTo(Course, { foreignKey: 'courseId' });
+  Term.hasMany(TermClass, { foreignKey: 'termId' });
   const ClassRoster = sequelize.define('class_roster', {
-    class_id: { type: Sequelize.INTEGER, primaryKey: true },
-    person_id: { type: Sequelize.INTEGER, primaryKey: true },
+    classId: { field: 'classId', type: Sequelize.INTEGER, primaryKey: true },
+    personId: { field: 'personId', type: Sequelize.INTEGER, primaryKey: true },
   }, { freezeTableName: true });
-  ClassRoster.hasMany(TermClass, { foreignKey: 'class_id' });
+  ClassRoster.hasMany(TermClass, { foreignKey: 'classId' });
   Person.belongsToMany(TermClass, {
     through: 'class_roster',
-    foreignKey: 'person_id',
-    other_key: 'class_id',
+    foreignKey: 'personId',
+    other_key: 'classId',
   });
   TermClass.belongsToMany(Person, {
     through: 'class_roster',
     as: { singular: 'student', plural: 'students' },
-    foreignKey: 'class_id',
-    other_key: 'person_id',
+    foreignKey: 'classId',
+    other_key: 'personId',
   });
   Person.belongsToMany(TermClass, {
     through: 'class_teachers',
-    foreignKey: 'person_id',
-    other_key: 'class_id',
+    foreignKey: 'personId',
+    other_key: 'classId',
   });
   TermClass.belongsToMany(Person, {
     through: 'class_teachers',
     as: { singular: 'teacher', plural: 'teachers' },
-    foreignKey: 'class_id',
-    other_key: 'person_id',
+    foreignKey: 'classId',
+    other_key: 'personId',
   });
 
-  Term.prototype.countStudents = () => {
-    ClassRoster.count({
+  Term.prototype.countStudents = function countStudents() {
+    return ClassRoster.count({
       distinct: true,
-      col: 'person_id',
+      col: 'personId',
       include: [
         {
           model: TermClass,
-          where: { term_id: this.term_id },
+          where: { termId: this.termId },
         },
       ],
     });

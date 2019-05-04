@@ -10,7 +10,6 @@ app.set('view engine', 'pug');
 const sequelize = new Sequelize('sqlite:db/data.sqlite3', {
   operatorsAliases: false,
   define: {
-    underscore: true,
     timestamps: false,
   },
 });

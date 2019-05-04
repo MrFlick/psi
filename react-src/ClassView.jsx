@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import StudentList from './StudentList';
 import PersonFinder from './PersonFinder';
-import camelCase from './CamelCase';
 
 class ClassView extends Component {
   constructor(props) {
@@ -15,12 +14,12 @@ class ClassView extends Component {
     fetch(`/api/classes/${classId}/students`)
       .then(response => response.json())
       .then((data) => {
-        this.setState({ students: camelCase(data) });
+        this.setState({ students: data });
       });
     fetch(`/api/classes/${classId}`)
       .then(response => response.json())
       .then((data) => {
-        this.setState(camelCase(data));
+        this.setState(data);
       });
   }
 

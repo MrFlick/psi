@@ -27,8 +27,8 @@ function getRouter(sequelize) {
       .then(person => person.getClasses({ include: [models.Course, models.Term] }))
       .then(data => data.map((x) => {
         const y = x.get({ plain: true });
-        y.course_name = y.course.course_name;
-        y.term_name = y.term.term_name;
+        y.courseName = y.course.courseName;
+        y.termName = y.term.termName;
         delete y.course;
         delete y.class_roster;
         delete y.term;
@@ -56,8 +56,8 @@ function getRouter(sequelize) {
       term.countStudents().then((studentCount) => {
         term.countClasses().then((classCount) => {
           const x = term.get({ plain: true });
-          x.student_count = studentCount;
-          x.class_count = classCount;
+          x.studentCount = studentCount;
+          x.classCount = classCount;
           res.send(x);
         });
       });
@@ -65,7 +65,7 @@ function getRouter(sequelize) {
   });
   router.get('/terms/:tid/classes', (req, res) => {
     const query = {
-      where: { term_id: req.params.tid },
+      where: { termId: req.params.tid },
       include: [models.Course,
         {
           model: models.Person,
@@ -95,7 +95,7 @@ function getRouter(sequelize) {
             const course = values[0];
             const teachers = values[1];
             const termClassObj = termClass.get({ plain: true });
-            delete termClassObj.course_id;
+            delete termClassObj.courseId;
             termClassObj.course = course;
             termClassObj.teachers = teachers.map((x) => {
               const y = x.get({ plain: true });
@@ -138,8 +138,8 @@ function getRouter(sequelize) {
     });
     const getPerson = (data, t) => {
       const personData = models.Person.build(data).get({ plain: true });
-      if (personData.person_id) {
-        return models.Person.findByPk(personData.person_id);
+      if (personData.personId) {
+        return models.Person.findByPk(personData.personId);
       }
       return models.Person.create(personData, { transaction: t });
     };

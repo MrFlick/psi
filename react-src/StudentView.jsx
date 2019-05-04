@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import StudentClassList from './StudentClassList';
-import camelCase from './CamelCase';
 
 class StudentView extends Component {
   constructor(props) {
@@ -13,7 +12,7 @@ class StudentView extends Component {
     const { personId } = this.props;
     fetch(`/api/people/${personId}/classes`)
       .then(response => response.json())
-      .then((data) => { this.setState({ classes: camelCase(data) }); });
+      .then((data) => { console.log(data); this.setState({ classes: data }); });
   }
 
   render() {
