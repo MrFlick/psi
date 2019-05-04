@@ -90,13 +90,16 @@ function getRouter(sequelize) {
   router.get('/classes/:cid', (req, res) => {
     models.TermClass.findByPk(req.params.cid).then(
       (termClass) => {
-        Promise.all([termClass.getCourse(), termClass.getTeachers()])
+        Promise.all([termClass.getCourse(), termClass.getTeachers(), termClass.getTerm()])
           .then((values) => {
             const course = values[0];
             const teachers = values[1];
+            const term = values[2];
             const termClassObj = termClass.get({ plain: true });
             delete termClassObj.courseId;
+            delete termClassObj.termId;
             termClassObj.course = course;
+            termClassObj.term = term;
             termClassObj.teachers = teachers.map((x) => {
               const y = x.get({ plain: true });
               delete y.class_teachers;
