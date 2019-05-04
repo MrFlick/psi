@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import StudentList from './StudentList';
 import PersonFinder from './PersonFinder';
-import UlrFor from './UrlFor';
+import UrlFor from './UrlFor';
 
 class ClassView extends Component {
   constructor(props) {
@@ -75,7 +75,7 @@ function ClassDetails({ details, course, term, teachers }) {
         )}
         <tr>
           <td>Term</td>
-          <td><Link to={UlrFor.termPage(term.termId)}>{term.termName}</Link></td>
+          <td><Link to={UrlFor.termPage(term.termId)}>{term.termName}</Link></td>
         </tr>
       </tbody>
     </table>
@@ -91,7 +91,7 @@ ClassDetails.propTypes = {
 
 function TeacherName({ personId, fullName }) {
   return (
-    <Link to={UlrFor.studentPage(personId)}>{fullName}</Link>
+    <Link to={UrlFor.studentPage(personId)}>{fullName}</Link>
   );
 }
 

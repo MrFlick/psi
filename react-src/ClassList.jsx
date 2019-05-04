@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import UlrFor from './UrlFor';
+import UrlFor from './UrlFor';
 
 function ClassList({ classes }) {
   return (
@@ -22,7 +22,7 @@ function ClassList({ classes }) {
               <Link
                 key={row.classId}
                 className={`card class${cardColor}`}
-                to={UlrFor.classPage(row.classId)}
+                to={UrlFor.classPage(row.classId)}
               >
                 <div className="content">
                   <div className="header">{row.courseId}</div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import UlrFor from './UrlFor';
+import UrlFor from './UrlFor';
 
 function TermList({ terms }) {
   return (
@@ -22,7 +22,7 @@ function TermCard({ termId, termName }) {
   return (
     <Link
       className="card term"
-      to={UlrFor.termPage(termId)}
+      to={UrlFor.termPage(termId)}
     >
       <div className="content">
         <div className="header">{termName}</div>

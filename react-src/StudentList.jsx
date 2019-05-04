@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import UlrFor from './UrlFor';
+import UrlFor from './UrlFor';
 
 function StudentList({ students }) {
   return (
@@ -21,7 +21,7 @@ function StudentCard({ personId, fullName }) {
   return (
     <div className="card student">
       <div className="content">
-        <Link to={UlrFor.studentPage(personId)}>{fullName}</Link>
+        <Link to={UrlFor.studentPage(personId)}>{fullName}</Link>
       </div>
     </div>
   );
