@@ -91,21 +91,16 @@ function getRouter(sequelize) {
     models.TermClass.findByPk(req.params.cid).then(
       (termClass) => {
         Promise.all([termClass.getCourse(), termClass.getTeachers(), termClass.getTerm()])
-          .then((values) => {
-            const course = values[0];
-            const teachers = values[1];
-            const term = values[2];
+          .then(([course, teachers, term]) => {
             const termClassObj = termClass.get({ plain: true });
-            delete termClassObj.courseId;
-            delete termClassObj.termId;
-            termClassObj.course = course;
-            termClassObj.term = term;
-            termClassObj.teachers = teachers.map((x) => {
+            const { courseId, termId, classId, ...schedule } = termClassObj;
+            const result = { classId, course, term, schedule };
+            result.teachers = teachers.map((x) => {
               const y = x.get({ plain: true });
               delete y.class_teachers;
               return y;
             });
-            res.send(termClass);
+            res.send(result);
           });
       },
     );
