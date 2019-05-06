@@ -26,9 +26,7 @@ class ClassView extends Component {
   }
 
   render() {
-    const {
-      course, teachers, students, term, schedule,
-    } = this.state;
+    const { course, teachers, students, term, schedule } = this.state;
     const { classId } = this.props;
     return (
       <div className="App">

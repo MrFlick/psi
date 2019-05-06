@@ -123,15 +123,13 @@ function getRouter(sequelize) {
     const knownActions = ['add'];
     if (!actions.every(x => knownActions.includes(x))) {
       const badActions = actions.filter(x => !knownActions.includes(x));
-      throw {
-        message: `Unrecognized action(s): ${badActions.join(', ')}`,
-      };
+      const message = `Unrecognized action(s): ${badActions.join(', ')}`;
+      throw { message };
     }
     Object.entries(req.body).forEach(([k, v]) => {
       if (!Array.isArray(v)) {
-        throw {
-          message: `Action '${k}' does not contain array`,
-        };
+        const message = `Action '${k}' does not contain array`;
+        throw { message };
       }
     });
     const getPerson = (data, t) => {
@@ -147,9 +145,8 @@ function getRouter(sequelize) {
           if (p) {
             return p.addClass(classId, { transaction: t });
           }
-          throw {
-            message: `Unable to find person: ${JSON.stringify(rawPerson)}`,
-          };
+          const message = `Unable to find person: ${JSON.stringify(rawPerson)}`;
+          throw { message };
         }).catch((err) => {
           throw err;
         });
