@@ -48,3 +48,17 @@ CREATE TABLE class_schedule (
 	classId INTEGER NOT NULL,
 	startDateTime TEXT
 );
+
+CREATE TABLE login_ids (
+	personId INTEGER PRIMARY KEY,
+	source TEXT NOT NULL,
+	identifier TEXT NOT NULL
+);
+
+CREATE TABLE login_failures (
+	source TEXT NOT NULL,
+	identifier TEXT NOT NULL,
+	name TEXT,
+	email TEXT,
+	loginDateTime TEXT
+);
