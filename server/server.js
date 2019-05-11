@@ -12,6 +12,7 @@ const config = require('../.config');
 
 const sequelize = new Sequelize('sqlite:db/data.sqlite3', {
   operatorsAliases: false,
+  logging: false,
   define: {
     timestamps: false,
   },

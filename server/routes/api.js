@@ -7,10 +7,22 @@ const router = express.Router();
 function getRouter(sequelize) {
   const models = modelSource(sequelize);
 
+  router.use((req, res, next) => {
+    const { user } = req;
+    if (!user) {
+      res.status(401).send('Not logged in');
+    } else {
+      next();
+    }
+  });
   router.use(express.json());
 
   router.get('/', (req, res) => {
     res.send('hello');
+  });
+  router.get('/me', (req, res) => {
+    const { user } = req;
+    res.send({ personId: user.personId });
   });
   router.get('/people', (req, res) => {
     models.Person.findAll().then((people) => {
