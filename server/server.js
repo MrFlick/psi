@@ -18,6 +18,9 @@ const sequelize = new Sequelize('sqlite:db/data.sqlite3', {
   },
 });
 
+app.use(express.static('public'));
+app.use(express.static('react-build'));
+
 app.use(session({
   secret: config.sessionSecret,
   resave: false,
@@ -28,8 +31,6 @@ const api = require('./routes/api')(sequelize);
 const user = require('./routes/user');
 const auth = require('./routes/auth')(app, config, sequelize);
 
-app.use(express.static('public'));
-app.use(express.static('react-build'));
 app.use('/api', api);
 app.use('/auth', auth);
 app.use('/', user);
