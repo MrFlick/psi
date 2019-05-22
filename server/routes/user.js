@@ -7,6 +7,15 @@ router.get('/login', (req, res) => {
   req.session.messages = [];
 });
 
+router.use((req, res, next) => {
+  const { user } = req;
+  if (!user) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+});
+
 router.get('*', (req, res) => {
   res.render('index');
 });
